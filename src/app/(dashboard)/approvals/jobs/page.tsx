@@ -3,9 +3,7 @@
 import { DashboardPageHeader } from '@/components/dashboard/dashboard-page-header'
 import { JobMobileCard } from '@/components/jobs/job-mobile-card'
 import { JobTable } from '@/components/jobs/job-table'
-import { Alert } from '@/components/ui/alert'
-import { EmptyState } from '@/components/ui/empty-state'
-import { Skeleton } from '@/components/ui/skeleton'
+import { PageState } from '@/components/ui/page-state'
 import { useJobs } from '@/hooks/use-jobs'
 
 export default function JobApprovalsPage() {
@@ -20,29 +18,21 @@ export default function JobApprovalsPage() {
         description="Review and approve pending job opportunities."
       />
 
-      {error ? <Alert variant="danger">{error}</Alert> : null}
+      <PageState
+        isLoading={isLoading}
+        error={error}
+        isEmpty={pendingJobs.length === 0}
+        emptyTitle="No pending jobs"
+        emptyDescription="Pending job approvals will appear here."
+      >
+        <JobTable jobs={pendingJobs} />
 
-      {isLoading ? (
-        <Skeleton className="h-80 w-full" />
-      ) : pendingJobs.length === 0 ? (
-        <EmptyState
-          title="No pending jobs"
-          description="Pending job approvals will appear here."
-        />
-      ) : (
-        <>
-          <JobTable jobs={pendingJobs} />
-
-          <div className="space-y-4 md:hidden">
-            {pendingJobs.map((job, index) => (
-              <JobMobileCard
-                key={`${job.id}-${job.companyId ?? job.companyName ?? 'job'}-${index}`}
-                job={job}
-              />
-            ))}
-          </div>
-        </>
-      )}
+        <div className="space-y-4 md:hidden">
+          {pendingJobs.map((job) => (
+            <JobMobileCard key={job.id} job={job} />
+          ))}
+        </div>
+      </PageState>
     </div>
   )
 }

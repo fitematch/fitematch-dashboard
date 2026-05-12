@@ -1,7 +1,8 @@
 'use client'
 
 import { DashboardPageHeader } from '@/components/dashboard/dashboard-page-header'
-import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { useAuth } from '@/hooks/use-auth'
 
 export default function ProfilePage() {
@@ -15,33 +16,55 @@ export default function ProfilePage() {
       />
 
       <Card>
-        <CardContent>
-          <dl className="grid gap-4 text-sm sm:grid-cols-2">
+        <CardHeader>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <dt className="text-slate-500">Name</dt>
-              <dd className="mt-1 font-medium text-slate-100">
+              <h2 className="text-lg font-semibold text-slate-100">
+                Administrator account
+              </h2>
+
+              <p className="mt-1 text-sm text-slate-400">
+                Administrative profile information.
+              </p>
+            </div>
+
+            <Badge variant="success">
+              {user?.status ?? 'unknown'}
+            </Badge>
+          </div>
+        </CardHeader>
+
+        <CardContent>
+          <dl className="grid gap-6 sm:grid-cols-2">
+            <div>
+              <dt className="text-sm text-slate-500">Name</dt>
+
+              <dd className="mt-1 text-sm font-medium text-slate-100">
                 {user?.name ?? '-'}
               </dd>
             </div>
 
             <div>
-              <dt className="text-slate-500">Email</dt>
-              <dd className="mt-1 font-medium text-slate-100">
+              <dt className="text-sm text-slate-500">Email</dt>
+
+              <dd className="mt-1 text-sm font-medium text-slate-100">
                 {user?.email ?? '-'}
               </dd>
             </div>
 
             <div>
-              <dt className="text-slate-500">Admin role</dt>
-              <dd className="mt-1 font-medium text-slate-100">
+              <dt className="text-sm text-slate-500">Admin role</dt>
+
+              <dd className="mt-1 text-sm font-medium text-slate-100">
                 {user?.adminRole ?? '-'}
               </dd>
             </div>
 
             <div>
-              <dt className="text-slate-500">Status</dt>
-              <dd className="mt-1 font-medium text-slate-100">
-                {user?.status ?? '-'}
+              <dt className="text-sm text-slate-500">Product role</dt>
+
+              <dd className="mt-1 text-sm font-medium text-slate-100">
+                {user?.productRole ?? '-'}
               </dd>
             </div>
           </dl>

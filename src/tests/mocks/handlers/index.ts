@@ -11,6 +11,23 @@ export const handlers = [
     })
   }),
 
+  http.post(`${apiUrl}/auth/sign-in`, async () => {
+    return HttpResponse.json({
+      accessToken: 'access-token',
+      refreshToken: 'refresh-token',
+      user: {
+        id: 'user-1',
+        name: 'Admin User',
+        email: 'admin@fitematch.com.br',
+        productRole: null,
+        adminRole: 'admin',
+        status: 'active',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+    })
+  }),
+
   http.get(`${apiUrl}/dashboard/summary`, () => {
     return HttpResponse.json({
       users: {

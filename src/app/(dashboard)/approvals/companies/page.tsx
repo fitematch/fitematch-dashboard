@@ -3,9 +3,7 @@
 import { CompanyMobileCard } from '@/components/companies/company-mobile-card'
 import { CompanyTable } from '@/components/companies/company-table'
 import { DashboardPageHeader } from '@/components/dashboard/dashboard-page-header'
-import { Alert } from '@/components/ui/alert'
-import { EmptyState } from '@/components/ui/empty-state'
-import { Skeleton } from '@/components/ui/skeleton'
+import { PageState } from '@/components/ui/page-state'
 import { useCompanies } from '@/hooks/use-companies'
 
 export default function CompanyApprovalsPage() {
@@ -22,29 +20,21 @@ export default function CompanyApprovalsPage() {
         description="Review and approve pending recruiter companies."
       />
 
-      {error ? <Alert variant="danger">{error}</Alert> : null}
+      <PageState
+        isLoading={isLoading}
+        error={error}
+        isEmpty={pendingCompanies.length === 0}
+        emptyTitle="No pending companies"
+        emptyDescription="Pending company approvals will appear here."
+      >
+        <CompanyTable companies={pendingCompanies} />
 
-      {isLoading ? (
-        <Skeleton className="h-80 w-full" />
-      ) : pendingCompanies.length === 0 ? (
-        <EmptyState
-          title="No pending companies"
-          description="Pending company approvals will appear here."
-        />
-      ) : (
-        <>
-          <CompanyTable companies={pendingCompanies} />
-
-          <div className="space-y-4 md:hidden">
-            {pendingCompanies.map((company, index) => (
-              <CompanyMobileCard
-                key={`${company.id}-${company.document ?? company.name}-${index}`}
-                company={company}
-              />
-            ))}
-          </div>
-        </>
-      )}
+        <div className="space-y-4 md:hidden">
+          {pendingCompanies.map((company) => (
+            <CompanyMobileCard key={company.id} company={company} />
+          ))}
+        </div>
+      </PageState>
     </div>
   )
 }

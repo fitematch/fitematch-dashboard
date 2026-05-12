@@ -3,9 +3,7 @@
 import { ApplicationMobileCard } from '@/components/applications/application-mobile-card'
 import { ApplicationTable } from '@/components/applications/application-table'
 import { DashboardPageHeader } from '@/components/dashboard/dashboard-page-header'
-import { Alert } from '@/components/ui/alert'
-import { EmptyState } from '@/components/ui/empty-state'
-import { Skeleton } from '@/components/ui/skeleton'
+import { PageState } from '@/components/ui/page-state'
 import { useApplications } from '@/hooks/use-applications'
 
 export default function ApplicationsPage() {
@@ -18,29 +16,24 @@ export default function ApplicationsPage() {
         description="Track candidates applying to job opportunities."
       />
 
-      {error ? <Alert variant="danger">{error}</Alert> : null}
+      <PageState
+        isLoading={isLoading}
+        error={error}
+        isEmpty={applications.length === 0}
+        emptyTitle="No applications found"
+        emptyDescription="Applications will appear here when candidates apply to jobs."
+      >
+        <ApplicationTable applications={applications} />
 
-      {isLoading ? (
-        <Skeleton className="h-80 w-full" />
-      ) : applications.length === 0 ? (
-        <EmptyState
-          title="No applications found"
-          description="Applications will appear here when candidates apply to jobs."
-        />
-      ) : (
-        <>
-          <ApplicationTable applications={applications} />
-
-          <div className="space-y-4 md:hidden">
-            {applications.map((application, index) => (
-              <ApplicationMobileCard
-                key={`${application.id}-${application.jobId ?? application.jobTitle ?? 'job'}-${application.userId ?? application.userEmail ?? 'user'}-${index}`}
-                application={application}
-              />
-            ))}
-          </div>
-        </>
-      )}
+        <div className="space-y-4 md:hidden">
+          {applications.map((application) => (
+            <ApplicationMobileCard
+              key={application.id}
+              application={application}
+            />
+          ))}
+        </div>
+      </PageState>
     </div>
   )
 }
