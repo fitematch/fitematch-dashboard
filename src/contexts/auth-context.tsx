@@ -34,9 +34,7 @@ type AuthProviderProps = {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [hasHydratedAuth, setHasHydratedAuth] = useState(false)
   const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(() =>
-    Boolean(tokenStorage.getAccessToken()),
-  )
+  const [isLoading, setIsLoading] = useState(true)
 
   const refreshMe = useCallback(async () => {
     const token = tokenStorage.getAccessToken()
@@ -73,6 +71,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     setUser(response.user)
+    setHasHydratedAuth(true)
+    setIsLoading(false)
   }, [])
 
   const signOut = useCallback(() => {
@@ -83,11 +83,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [])
 
   useEffect(() => {
-    if (!isLoading || hasHydratedAuth) {
+    if (hasHydratedAuth) {
       return
     }
 
     void (async () => {
+      const token = tokenStorage.getAccessToken()
+
+      if (!token) {
+        setUser(null)
+        setIsLoading(false)
+        setHasHydratedAuth(true)
+        return
+      }
+
       try {
         const me = await authService.me()
 
@@ -100,7 +109,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setHasHydratedAuth(true)
       }
     })()
-  }, [hasHydratedAuth, isLoading])
+  }, [hasHydratedAuth])
 
   const value = useMemo<AuthContextValue>(
     () => ({

@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useEffect, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 
 import { ROUTES } from '@/constants/routes'
 import { useAuth } from '@/hooks/use-auth'
@@ -13,14 +13,25 @@ type PrivateRouteProps = {
 export function PrivateRoute({ children }: PrivateRouteProps) {
   const router = useRouter()
   const { isAuthenticated, isLoading } = useAuth()
+  const [hasMounted, setHasMounted] = useState(false)
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    const frame = window.requestAnimationFrame(() => {
+      setHasMounted(true)
+    })
+
+    return () => {
+      window.cancelAnimationFrame(frame)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (hasMounted && !isLoading && !isAuthenticated) {
       router.replace(ROUTES.auth.signIn)
     }
-  }, [isAuthenticated, isLoading, router])
+  }, [hasMounted, isAuthenticated, isLoading, router])
 
-  if (isLoading) {
+  if (!hasMounted || isLoading) {
     return <div className="p-6 text-sm text-slate-400">Loading...</div>
   }
 
