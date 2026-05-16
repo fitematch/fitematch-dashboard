@@ -1,5 +1,7 @@
 'use client'
 
+import { FiHome } from 'react-icons/fi'
+
 import { Alert } from '@/components/ui/alert'
 import { DashboardPageHeader } from '@/components/dashboard/dashboard-page-header'
 import { DashboardSummaryCards } from '@/components/dashboard/dashboard-summary-cards'
@@ -13,6 +15,7 @@ export default function DashboardPage() {
       <DashboardPageHeader
         title="Dashboard"
         description="Administrative overview for fitematch."
+        icon={FiHome}
       />
 
       {error ? (

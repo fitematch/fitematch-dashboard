@@ -8,6 +8,9 @@ export type User = {
   id: string
   name: string
   email: string
+  birthday?: string | null
+  birthDate?: string | null
+  dateOfBirth?: string | null
   productRole?: ProductRole | null
   adminRole?: AdminRole | null
   status?: UserStatus | null

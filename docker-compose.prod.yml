@@ -1,0 +1,16 @@
+services:
+  fitematch-dashboard:
+    container_name: fitematch-dashboard
+    image: fitematch-dashboard:production
+    build:
+      context: .
+      target: runner
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+        NEXT_PUBLIC_APP_ENV: ${NEXT_PUBLIC_APP_ENV}
+    ports:
+      - '3002:3000'
+    env_file:
+      - .env.production
+    restart: unless-stopped

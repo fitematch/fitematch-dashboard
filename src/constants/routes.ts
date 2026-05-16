@@ -14,5 +14,6 @@ export const ROUTES = {
     },
     profile: '/profile',
     settings: '/settings',
+    emailTemplates: '/settings/email-templates',
   },
 } as const

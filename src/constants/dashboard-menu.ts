@@ -6,6 +6,7 @@ import {
   FiSettings,
   FiUser,
   FiUsers,
+  FiMail
 } from 'react-icons/fi'
 import {
   FaBuilding,
@@ -48,6 +49,11 @@ export const DASHBOARD_MENU = [
     label: 'Job approvals',
     href: ROUTES.dashboard.approvals.jobs,
     icon: FiCheckSquare,
+  },
+  {
+    label: 'Email templates',
+    href: ROUTES.dashboard.emailTemplates,
+    icon: FiMail,
   },
   {
     label: 'Profile',

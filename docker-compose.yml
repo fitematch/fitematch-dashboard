@@ -1,0 +1,20 @@
+services:
+  fitematch-dashboard:
+    container_name: fitematch-dashboard
+    image: fitematch-dashboard:development
+    build:
+      context: .
+      target: deps
+    working_dir: /app
+    command: npm run dev
+    ports:
+      - '3002:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    env_file:
+      - .env.local
+    environment:
+      NEXT_TELEMETRY_DISABLED: '1'
+      WATCHPACK_POLLING: 'true'

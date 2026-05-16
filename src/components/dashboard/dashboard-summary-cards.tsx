@@ -6,28 +6,12 @@ import {
 import {
   FaBuilding
 } from 'react-icons/fa';
+import type { DashboardSummaryResponse } from '@/services/dashboard/dashboard.types'
 
 import { DashboardSummaryCard } from './dashboard-summary-card'
 
 type DashboardSummaryCardsProps = {
-  summary: {
-    users: {
-      total: number
-      lastWeek: number
-    }
-    companies: {
-      total: number
-      lastWeek: number
-    }
-    jobs: {
-      total: number
-      lastWeek: number
-    }
-    applications: {
-      total: number
-      lastWeek: number
-    }
-  } | null
+  summary: DashboardSummaryResponse | null
   isLoading?: boolean
 }
 

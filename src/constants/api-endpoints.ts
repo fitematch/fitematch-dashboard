@@ -17,12 +17,16 @@ export const API_ENDPOINTS = {
     read: (companyId: string) => `/company/${companyId}`,
     update: (companyId: string) => `/company/${companyId}`,
     delete: (companyId: string) => `/company/${companyId}`,
+    approve: (companyId: string) => `/company/${companyId}/approve`,
+    reject: (companyId: string) => `/company/${companyId}/reject`,
   },
   jobs: {
     list: '/job',
     read: (jobId: string) => `/job/${jobId}`,
     update: (jobId: string) => `/job/${jobId}`,
     delete: (jobId: string) => `/job/${jobId}`,
+    approve: (jobId: string) => `/job/${jobId}/approve`,
+    reject: (jobId: string) => `/job/${jobId}/reject`,
   },
   applications: {
     list: '/apply',

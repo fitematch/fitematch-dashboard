@@ -1,9 +1,12 @@
 'use client'
 
+import { FiUser } from 'react-icons/fi'
+
 import { DashboardPageHeader } from '@/components/dashboard/dashboard-page-header'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { useAuth } from '@/hooks/use-auth'
+import { getStatusBadgeVariant } from '@/utils/status-badge'
 
 export default function ProfilePage() {
   const { user } = useAuth()
@@ -13,6 +16,7 @@ export default function ProfilePage() {
       <DashboardPageHeader
         title="Profile"
         description="View your administrative account information."
+        icon={FiUser}
       />
 
       <Card>
@@ -28,8 +32,8 @@ export default function ProfilePage() {
               </p>
             </div>
 
-            <Badge variant="success">
-              {user?.status ?? 'unknown'}
+            <Badge variant={getStatusBadgeVariant(user?.status)}>
+              {(user?.status ?? 'unknown').toUpperCase()}
             </Badge>
           </div>
         </CardHeader>
